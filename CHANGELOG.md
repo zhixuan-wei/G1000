@@ -22,6 +22,7 @@
 - **演示固件 `src/DemoButtons.cpp` + `[env:demo_mfd]` / `[env:demo_pfd]`**：
   - 不依赖驱动的按键/编码器自检固件（`DEMO_BUILD` 宏），用于装机后验证接线
   - 动作表按单元参数化：PFD 61 项（无 AP 键版本）、MFD 73 项
+- **裁剪子板 Gerber `hardware/cut_gerber/`**：9 块子板（APL、DualEnc、Enc、FF、FMS、HAT、Key、MUX、Range）裁剪后的单板 Gerber，可供直接打样，或按 `hardware/PCB/README.md` 流程拼板
 
 ### 变更 (Changed)
 

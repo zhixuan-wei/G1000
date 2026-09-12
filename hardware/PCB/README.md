@@ -2,8 +2,9 @@
 
 本目录中的 Gerber 压缩包为立创 EDA（EasyEDA）导出的原始子板 Gerber。
 实际打样时为降低成本，将多块子板拼成一块大板一次生产。
-**依据 PCB 授权协议（CC BY-NC-ND 4.0，见 `hardware/LICENSE`），修改版 / 拼版 Gerber 不随本仓库分发**；
-本文件仅记录完整复现流程与关键参数，供自行拼板参考。
+裁剪后的单块子板 Gerber 已收录于同级目录 `hardware/cut_gerber/`；
+拼版（panelized）成品 Gerber 依据 PCB 授权协议（CC BY-NC-ND 4.0，见 `hardware/LICENSE`）不随本仓库分发。
+本文件记录完整复现流程与关键参数，供自行拼板参考。
 
 ## 生产流程
 
@@ -32,4 +33,4 @@
 ## 授权说明
 
 - 本目录 PCB 文件授权：CC BY-NC-ND 4.0（禁止分发演绎版本）。
-- 因此本仓库仅保留原始子板 Gerber 与本流程说明，不包含派生的拼板 Gerber 文件。
+- 本仓库包含：原始子板 Gerber、裁剪后的单板 Gerber（`hardware/cut_gerber/`）与本流程说明；不含派生的拼版成品 Gerber。
