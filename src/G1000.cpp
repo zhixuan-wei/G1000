@@ -72,11 +72,24 @@
 #elif XFD_UNIT == 11
 // mrusk PFD micro
 #define BOARD_ID "0011"
+// 双控制器支持：PFD 板握手名（驱动据此生成 CM 节 [mrusk-G1000XFD2#1]）
+#define DEVICE_NAME "mrusk-G1000XFD2"
 #define BOARD_TYPE BOARD_MICRO
-#define AP_NXI 0
+// 2026-09-12：PFD 板启用 12 个 AP 键（AP_NXI 布局，与 MFD 板 unit 12 完全一致）。
+// 接线：12 个 AP 键接 MUX 模块 2 通道 0-11，键序（与 MFD 板相同）：
+//   ch0 BTN_AP, ch1 BTN_FD, ch2 BTN_NAV, ch3 BTN_ALT, ch4 BTN_VS, ch5 BTN_FLC,
+//   ch6 BTN_YD, ch7 BTN_HDG, ch8 BTN_APR, ch9 BTN_VNAV,
+//   ch10 BTN_NOSE_UP, ch11 BTN_NOSE_DN
+// 注意：AP_NXI 与 LEFT_PANEL 共用 MUX 2 的通道 0-11（SW_MASTER/SW_DEICE 等），
+// 二者互斥；且 BOARD_MICRO 每通道仅读 6 位输入（最多 6 个 MUX 模块 = 96 通道），
+// 面板 63 + AP 12 + 左开关面板 25 = 101 > 96，三者无法共存。
+// 故同时禁用 LEFT_PANEL：该面板未接线、SW_* 无 CM 映射，禁用无副作用。
+// 改后资源：buttons 45/50、encoders 14/15、switches 0，均在限内。
+// 如日后需要左开关面板，须改用输入通道更多的板卡并重新规划模块分配。
+#define AP_NXI 1
 #define AP_STD 0
 #define MFD_PANEL 0
-#define LEFT_PANEL 1
+#define LEFT_PANEL 0
 #define RIGHT_PANEL 0
 #define MAX_BUTTONS 50
 #define MAX_SWITCHES 20
@@ -89,6 +102,8 @@
 #elif XFD_UNIT == 12
 // mrusk MFD micro
 #define BOARD_ID "0012"
+// 双控制器支持：MFD 板握手名（驱动据此生成 CM 节 [mrusk-G1000XFD1#1]）
+#define DEVICE_NAME "mrusk-G1000XFD1"
 #define BOARD_TYPE BOARD_MICRO
 #define AP_NXI 1
 #define AP_STD 0
@@ -105,6 +120,11 @@
 #define DM13A_DCK 14
 #define DM13A_LAT 15
 #else
+#endif
+
+// 握手设备名回退：未显式定义 DEVICE_NAME 的单元沿用历史名称
+#ifndef DEVICE_NAME
+#define DEVICE_NAME "mrusk-G1000XFD1"
 #endif
 
 // delay for keep alive message [ms]
@@ -443,7 +463,7 @@ void loop()
     // keep alive for RSG connection
     if (millis() >= tmr_next)
     { // timer interval for keepalive
-        Serial.write("####RealSimGear#mrusk-G1000XFD1#1#");
+        Serial.write("####RealSimGear#" DEVICE_NAME "#1#");
         Serial.write(VERSION);
         Serial.write("#");
         Serial.write(BOARD_ID);
