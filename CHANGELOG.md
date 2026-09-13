@@ -3,6 +3,15 @@
 本项目所有重要变更记录于此文件。
 格式参考 [Keep a Changelog](https://keepachangelog.com/)，版本遵循语义化版本。
 
+## [2.0.1] - 2026-09-14
+
+### 修复 (Fixed)
+
+- **配置**：NOSE UP/DN 改为释放沿（`-=`）触发，修复 FLC 模式下按住一次连续变速的问题
+- **固件**：MFD 板（unit 12）禁用未接线的 RIGHT_PANEL（`RIGHT_PANEL 1->0`，`MAX_SWITCHES`/`MAX_POTIS` 归零），修复悬空模拟脚受 DM13A 数字噪声耦合、无操作时持续上报 `SW_INSTR_1/2`、`SW_FLOOD_1/2` 事件刷屏的问题
+- **驱动映射**：激活映射 v2.2 将两板共 104 条 BTN 规则由保持语义（裸 `=`，按住重复触发）改为按下沿（`+=`，单次触发），覆盖 AP/softkey/FMS/FF/PAN/电台等全部按键；NOSE 保持 `-=`，CLR 长按语法、ENC/Range、LED 行不变
+- **新增存档**：实测通过的双控制器驱动映射存档为 `config/MSFS/CommandMapping.mrusk-dual-v2.2.ini`，与驱动激活映射逐行一致，可直接复制回 RealSimGear 目录恢复
+
 ## [2.0.0] - 2026-09-12
 
 ### 新增 (Added)
