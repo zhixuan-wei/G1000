@@ -109,12 +109,18 @@
 #define AP_STD 0
 #define MFD_PANEL 0
 #define LEFT_PANEL 0
-#define RIGHT_PANEL 1
+// 2026-09-13：RIGHT_PANEL 1->0，修复 MFD 板无操作时持续上报 SW_INSTR_1/2、
+// SW_FLOOD_1/2。原因：右手面板的 SW_INSTR/SW_FLOOD 是 A0/A1 模拟量输入
+// （handlePoti 按读数>>6 分 16 档，档位变化即发 NAME_<档>=1），本板 A0/A1
+// 悬空，且 DM13A LED 驱动（NUM_LEDS 7）的数字噪声耦合进悬空脚，导致档位
+// 在低档间乱跳刷事件。右手面板未接线、SW_* 无 CM 映射，禁用无副作用；
+// ANALOG_BASE 仅为该面板电位器服务，一并移除。
+// 改后资源：buttons 45/47、encoders 14/15、switches 0、potis 0，均在限内。
+#define RIGHT_PANEL 0
 #define MAX_BUTTONS 47
-#define MAX_SWITCHES 13
+#define MAX_SWITCHES 0
 #define MAX_ENCODERS 15
-#define MAX_POTIS 2
-#define ANALOG_BASE 0
+#define MAX_POTIS 0
 #define NUM_LEDS 7
 #define DM13A_DAI 16
 #define DM13A_DCK 14
